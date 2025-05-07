@@ -42,6 +42,71 @@ $books = [
     ["cover_image" => "https://picsum.photos/seed/book6/200/300", "title" => "The Dial & Savoy Sessions: Uncovered", "status" => "품절임박"],
 ];
 
+// 프로젝트 데이터 - 찰리 파커의 주요 공연 정보
+$performances = [
+    [
+        "title" => "Bird with Strings",
+        "venue" => "Carnegie Hall, New York",
+        "date" => "1949년 9월 17일",
+        "description" => "클래식 현악기와 함께한 파커의 가장 유명한 공연 중 하나로, 재즈와 클래식의 조화를 선보였습니다.",
+        "image" => "https://picsum.photos/seed/perf1/400/300",
+        "tag" => "전설적 공연"
+    ],
+    [
+        "title" => "Massey Hall Quintet",
+        "venue" => "Massey Hall, Toronto",
+        "date" => "1953년 5월 15일",
+        "description" => "디지 길레스피, 버드 파월, 찰스 밍거스, 맥스 로치와 함께한 역사적인 재즈 공연입니다.",
+        "image" => "https://picsum.photos/seed/perf2/400/300",
+        "tag" => "올스타 라인업"
+    ],
+    [
+        "title" => "Paris Jazz Festival",
+        "venue" => "Salle Pleyel, Paris",
+        "date" => "1949년 5월",
+        "description" => "유럽 투어 중 파리에서 열린 공연으로, 유럽 관객들에게 비밥 재즈를 알리는 중요한 순간이었습니다.",
+        "image" => "https://picsum.photos/seed/perf3/400/300"
+    ],
+    [
+        "title" => "Birdland Opening Night",
+        "venue" => "Birdland, New York",
+        "date" => "1949년 12월 15일",
+        "description" => "그의 별명을 따서 명명된 클럽의 개장 공연으로, 이후 재즈의 메카가 되었습니다.",
+        "image" => "https://picsum.photos/seed/perf4/400/300",
+        "tag" => "역사적 순간"
+    ],
+    [
+        "title" => "Savoy Sessions Live",
+        "venue" => "Savoy Ballroom, New York",
+        "date" => "1947년",
+        "description" => "Savoy 레코드 레이블과 함께한 라이브 세션으로, 당시 최고의 재즈 연주를 들을 수 있었던 공연입니다.",
+        "image" => "https://picsum.photos/seed/perf5/400/300"
+    ],
+    [
+        "title" => "52nd Street Jam Sessions",
+        "venue" => "Three Deuces, New York",
+        "date" => "1945년-1948년",
+        "description" => "뉴욕 52번가의 재즈 클럽에서 열린 정기 잼 세션으로, 비밥 혁명의 중심지였습니다.",
+        "image" => "https://picsum.photos/seed/perf6/400/300",
+        "tag" => "정기 공연"
+    ],
+    [
+        "title" => "West Coast Tour",
+        "venue" => "Billy Berg's, Los Angeles",
+        "date" => "1945년 12월",
+        "description" => "디지 길레스피와 함께한 서부 해안 투어로, 캘리포니아에 비밥 사운드를 소개했습니다.",
+        "image" => "https://picsum.photos/seed/perf7/400/300"
+    ],
+    [
+        "title" => "Royal Roost Residency",
+        "venue" => "Royal Roost, New York",
+        "date" => "1948년",
+        "description" => "찰리 파커가 로열 루스트에서 진행한 장기 레지던시 공연으로, 많은 레코딩이 이루어졌습니다.",
+        "image" => "https://picsum.photos/seed/perf8/400/300",
+        "tag" => "레코딩 라이브"
+    ]
+];
+
 // Careers 데이터 - 찰리 파커 테마
 $careers = [
     [
@@ -290,6 +355,33 @@ $education = [
                 </div>
             </section>
         </div>
+
+        <!-- Projects/Performance Section -->
+        <section id="projects" class="mt-16">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">공연 프로젝트</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <?php foreach ($performances as $performance): ?>
+                <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                    <div class="relative w-full h-48">
+                        <img src="<?php echo htmlspecialchars($performance['image']); ?>" alt="<?php echo htmlspecialchars($performance['title']); ?>" class="w-full h-full object-cover">
+                        <?php if (isset($performance['tag'])): ?>
+                        <span class="absolute top-3 right-3 px-3 py-1 bg-blue-500 text-white text-xs font-semibold rounded-full">
+                            <?php echo htmlspecialchars($performance['tag']); ?>
+                        </span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="p-4 flex-grow">
+                        <h3 class="font-bold text-lg text-gray-800 dark:text-white mb-1"><?php echo htmlspecialchars($performance['title']); ?></h3>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            <p><i class="fas fa-map-marker-alt mr-1"></i> <?php echo htmlspecialchars($performance['venue']); ?></p>
+                            <p><i class="far fa-calendar-alt mr-1"></i> <?php echo htmlspecialchars($performance['date']); ?></p>
+                        </div>
+                        <p class="text-gray-700 dark:text-gray-300 text-sm"><?php echo htmlspecialchars($performance['description']); ?></p>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
 
         <!-- Footer -->
         <footer class="text-center text-gray-500 dark:text-gray-400 py-12 mt-8">
