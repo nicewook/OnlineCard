@@ -1,8 +1,8 @@
 <?php
 // 데이터 정의 (나중에 이 부분을 동적으로 변경할 수 있습니다)
-$name = "Suh Seungwan";
-$title = "Prompt Engineer";
-$description = "유메타(주) 대표이사 · 세종사이버대학교 인공지능학과 겸임교수";
+$name = "Charlie Parker";
+$title = "Jazz Musician";
+$description = "찰리 파커는 재즈 역사상 가장 영향력 있는 음악가 중 하나로, 비밥 재즈의 선두주자로 알려져 있습니다.";
 $profileImageUrl = "profile.jpg"; // 프로필 이미지 경로
 
 $socialLinks = [
@@ -10,27 +10,25 @@ $socialLinks = [
     ["name" => "LinkedIn", "url" => "#", "icon" => "fab fa-linkedin-in"],
     ["name" => "Facebook", "url" => "#", "icon" => "fab fa-facebook-f"],
     ["name" => "Instagram", "url" => "#", "icon" => "fab fa-instagram"],
-    ["name" => "X", "url" => "#", "icon" => "fab fa-twitter"], // 또는 fab fa-x-twitter 최신 X 로고
+    ["name" => "X", "url" => "#", "icon" => "fab fa-x-twitter"], // 최신 X 로고로 변경
 ];
 
+// 찰리 파커의 대표곡 유튜브 동영상으로 변경
 $videos = [
     [
-        "thumbnail" => "video1_thumbnail.jpg", // 비디오 썸네일 이미지 경로
-        "title" => "나만의 GPTs를 완성하는 프롬프트엔지니어링 기법",
-        "source" => "클래스101 프롬프트 강의 (2024.2)",
-        "url" => "#"
+        "title" => "Charlie Parker - Now's The Time",
+        "embed_id" => "ryNtmkfeJk4",
+        "description" => "Charlie Parker의 대표곡 중 하나인 'Now's The Time'. 비밥 재즈의 중요한 작품으로 꼽힙니다."
     ],
     [
-        "thumbnail" => "video2_thumbnail.jpg",
-        "title" => "MBC 다큐멘터리 - 프롬프...",
-        "source" => "MBC 다큐멘터리 출연분 (2023.10)",
-        "url" => "#"
+        "title" => "Charlie Parker - All The Things You Are",
+        "embed_id" => "UTORd2Y_X6U",
+        "description" => "Charlie Parker가 연주한 재즈 스탠더드 'All The Things You Are'. 그의 뛰어난 즉흥 연주를 들을 수 있습니다."
     ],
     [
-        "thumbnail" => "video3_thumbnail.jpg",
-        "title" => "챗GPT가 쏘아올린 AI시대 직업, 억대 연봉이라고???",
-        "source" => "온토리TV 출연분 (2023.7)",
-        "url" => "#"
+        "title" => "Charlie Parker - Ornithology",
+        "embed_id" => "Z2tvlp7RnlM",
+        "description" => "파커의 대표작 'Ornithology'. 그의 별명인 'Bird'에서 영감을 받은 곡으로 비밥 재즈의 정수를 보여줍니다."
     ]
 ];
 
@@ -54,7 +52,7 @@ $books = [
         }
     </script>
     <!-- Font Awesome CDN 추가 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* 커스텀 스타일이 필요하면 여기에 추가 */
         .dark body {
@@ -97,7 +95,7 @@ $books = [
             <div>
                 <h2 class="text-blue-600 dark:text-blue-400 text-xl md:text-2xl font-semibold"><?php echo htmlspecialchars($title); ?></h2>
                 <h1 class="text-3xl md:text-5xl font-bold my-2 text-gray-800 dark:text-white"><?php echo htmlspecialchars($name); ?></h1>
-                <p class="text-gray-600 dark:text-gray-400 text-sm md:text-base mb-4">서승완 · 徐承完 · ソ·スンワン</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm md:text-base mb-4">Charlie Parker</p>
                 <p class="text-gray-700 dark:text-gray-300 mb-6"><?php echo htmlspecialchars($description); ?></p>
                 <div class="flex justify-center md:justify-start space-x-3 social-icon">
                     <?php foreach ($socialLinks as $link): ?>
@@ -111,17 +109,24 @@ $books = [
 
         <!-- Videos Section -->
         <section class="mt-12">
-            <h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-white">Videos</h2>
+            <h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-white">Charlie Parker's Music</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <?php foreach ($videos as $video): ?>
                 <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-                    <a href="<?php echo htmlspecialchars($video['url']); ?>" target="_blank">
-                        <img src="<?php echo htmlspecialchars($video['thumbnail']); ?>" alt="<?php echo htmlspecialchars($video['title']); ?>" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="font-semibold text-lg mb-1 truncate text-gray-800 dark:text-white" title="<?php echo htmlspecialchars($video['title']); ?>"><?php echo htmlspecialchars($video['title']); ?></h3>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm"><?php echo htmlspecialchars($video['source']); ?></p>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-md mb-2 text-gray-800 dark:text-white truncate" title="<?php echo htmlspecialchars($video['title']); ?>"><?php echo htmlspecialchars($video['title']); ?></h3>
+                        <div class="aspect-w-16 aspect-h-9">
+                            <iframe 
+                                class="w-full h-full rounded-md"
+                                src="https://www.youtube.com/embed/<?php echo htmlspecialchars($video['embed_id']); ?>" 
+                                title="<?php echo htmlspecialchars($video['title']); ?>" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
                         </div>
-                    </a>
+                        <p class="text-gray-600 dark:text-gray-400 text-xs mt-2 truncate" title="<?php echo htmlspecialchars($video['description']); ?>"><?php echo htmlspecialchars($video['description']); ?></p>
+                    </div>
                 </div>
                 <?php endforeach; ?>
             </div>
