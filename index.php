@@ -76,12 +76,24 @@ $books = [
         <!-- Header -->
         <header class="flex justify-between items-center py-6">
             <div class="flex items-center">
-                <div class="bg-blue-500 rounded-full w-10 h-10 flex items-center justify-center text-white font-bold mr-3">Ossw1</div>
-                <h1 class="text-2xl font-semibold"><?php echo htmlspecialchars($name); ?></h1>
+                <div class="bg-blue-500 dark:bg-blue-600 rounded-full w-10 h-10 flex items-center justify-center text-white text-lg mr-3">
+                    <i class="fas fa-record-vinyl"></i>
+                </div>
+                <h1 class="text-2xl font-semibold text-gray-800 dark:text-white"><?php echo htmlspecialchars($name); ?></h1>
             </div>
             <nav class="flex items-center space-x-4">
-                <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">Kakao Talk</a>
-                <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">Jazz Lounge</a>
+                <a href="#about" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">
+                    <i class="fas fa-user mr-1"></i> 소개
+                </a>
+                <a href="#career" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">
+                    <i class="fas fa-award mr-1"></i> 약력
+                </a>
+                <a href="#projects" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">
+                    <i class="fas fa-tasks mr-1"></i> 프로젝트
+                </a>
+                <a href="#contact" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">
+                    <i class="fas fa-envelope mr-1"></i> 연락
+                </a>
                 <button id="theme-toggle" class="p-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white">
                     <i class="fas fa-moon dark:hidden"></i>
                     <i class="fas fa-sun hidden dark:block"></i>
