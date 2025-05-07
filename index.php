@@ -1,9 +1,43 @@
 <?php
-// 데이터 정의 (나중에 이 부분을 동적으로 변경할 수 있습니다)
-$name = "Charlie Parker";
+// 메일 발송 처리 로직 추가
+$mailSent = false;
+$mailError = false;
+$formSubmitted = false; // 폼 제출 여부 확인 변수
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $formSubmitted = true; // 폼이 제출되었음을 표시
+    // 폼 데이터 가져오기 및 간단한 유효성 검사
+    $form_name = filter_var(trim($_POST["name"]), FILTER_SANITIZE_STRING); // 변수명 변경 (전역 $name과 충돌 방지)
+    $form_email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
+    $form_message = filter_var(trim($_POST["message"]), FILTER_SANITIZE_STRING);
+
+    if (!empty($form_name) && !empty($form_email) && filter_var($form_email, FILTER_VALIDATE_EMAIL) && !empty($form_message)) {
+        $to = "kiwook.jeong+test@gmail.com"; // 요청하신 수신자 이메일
+        $subject = "온라인 명함에서 온 메시지: " . $form_name;
+        $body = "이름: " . $form_name . "\n";
+        $body .= "이메일: " . $form_email . "\n\n";
+        $body .= "메시지:\n" . $form_message;
+
+        $headers = "From: webmaster@example.com\r\n"; // 실제 발신자 주소 또는 서버 기본값 사용 고려
+        $headers .= "Reply-To: " . $form_email . "\r\n";
+        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        $headers .= "X-Mailer: PHP/" . phpversion();
+
+        if (mail($to, $subject, $body, $headers)) {
+            $mailSent = true;
+        } else {
+            $mailError = true;
+        }
+    } else {
+        $mailError = true; // 유효하지 않은 입력
+    }
+}
+
+// 데이터 정의
+$pageOwnerName = "Charlie Parker"; // 페이지 소유자 이름 변수명 변경 (기존 $name)
 $title = "Jazz Musician";
 $description = "찰리 파커는 재즈 역사상 가장 영향력 있는 음악가 중 하나로, 비밥 재즈의 선두주자로 알려져 있습니다.";
-$profileImageUrl = "profile.jpg"; // 프로필 이미지 경로
+$profileImageUrl = "profile.jpg";
 
 $socialLinks = [
     ["name" => "Kakao", "url" => "#", "icon" => "fas fa-comment"],
@@ -13,7 +47,6 @@ $socialLinks = [
     ["name" => "X", "url" => "#", "icon" => "fab fa-x-twitter"], 
 ];
 
-// 찰리 파커의 대표곡 유튜브 동영상
 $videos = [
     [
         "title" => "Charlie Parker - Now's The Time",
@@ -32,7 +65,6 @@ $videos = [
     ]
 ];
 
-// Books 데이터 - Picsum 이미지 사용
 $books = [
     ["cover_image" => "https://picsum.photos/seed/book1/200/300", "title" => "The Bebop Bible: Scales & Licks"],
     ["cover_image" => "https://picsum.photos/seed/book2/200/300", "title" => "Bird's Cookbook: Secret Recipes for Hot Licks"],
@@ -42,7 +74,6 @@ $books = [
     ["cover_image" => "https://picsum.photos/seed/book6/200/300", "title" => "The Dial & Savoy Sessions: Uncovered", "status" => "품절임박"],
 ];
 
-// 프로젝트 데이터 - 찰리 파커의 주요 공연 정보
 $performances = [
     [
         "title" => "Bird with Strings",
@@ -107,7 +138,6 @@ $performances = [
     ]
 ];
 
-// Careers 데이터 - 찰리 파커 테마
 $careers = [
     [
         "period" => "1945 - 1955 (The Golden Age)",
@@ -131,7 +161,6 @@ $careers = [
     ]
 ];
 
-// Education 데이터 - 찰리 파커 테마
 $education = [
     [
         "category" => "Honorary Doctorate",
@@ -165,7 +194,7 @@ $education = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($name); ?> - 온라인 명함</title>
+    <title><?php echo htmlspecialchars($pageOwnerName); ?> - 온라인 명함</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         // Tailwind 다크 모드 설정
@@ -201,7 +230,7 @@ $education = [
                 <div class="bg-blue-500 dark:bg-blue-600 rounded-full w-10 h-10 flex items-center justify-center text-white text-lg mr-3">
                     <i class="fas fa-record-vinyl"></i>
                 </div>
-                <h1 class="text-2xl font-semibold text-gray-800 dark:text-white"><?php echo htmlspecialchars($name); ?></h1>
+                <h1 class="text-2xl font-semibold text-gray-800 dark:text-white"><?php echo htmlspecialchars($pageOwnerName); ?></h1>
             </div>
             <nav class="flex items-center space-x-4">
                 <a href="#about" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">
@@ -225,10 +254,10 @@ $education = [
 
         <!-- Profile Section -->
         <section class="bg-gray-100 dark:bg-gray-800 p-8 rounded-lg shadow-lg text-center md:text-left md:flex md:items-center">
-            <img src="<?php echo htmlspecialchars($profileImageUrl); ?>" alt="<?php echo htmlspecialchars($name); ?>" class="w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto md:mx-0 md:mr-8 border-4 border-white dark:border-gray-700">
+            <img src="<?php echo htmlspecialchars($profileImageUrl); ?>" alt="<?php echo htmlspecialchars($pageOwnerName); ?>" class="w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto md:mx-0 md:mr-8 border-4 border-white dark:border-gray-700">
             <div>
                 <h2 class="text-blue-600 dark:text-blue-400 text-xl md:text-2xl font-semibold"><?php echo htmlspecialchars($title); ?></h2>
-                <h1 class="text-3xl md:text-5xl font-bold my-2 text-gray-800 dark:text-white"><?php echo htmlspecialchars($name); ?></h1>
+                <h1 class="text-3xl md:text-5xl font-bold my-2 text-gray-800 dark:text-white"><?php echo htmlspecialchars($pageOwnerName); ?></h1>
                 <p class="text-gray-600 dark:text-gray-400 text-sm md:text-base mb-4">Charlie Parker</p>
                 <p class="text-gray-700 dark:text-gray-300 mb-6"><?php echo htmlspecialchars($description); ?></p>
                 <div class="flex justify-center md:justify-start space-x-3 social-icon">
@@ -383,9 +412,75 @@ $education = [
             </div>
         </section>
 
+        <!-- Contact Section -->
+        <section id="contact" class="mt-16 py-12 bg-gray-50 dark:bg-gray-800">
+            <div class="container mx-auto px-4 md:px-8 max-w-4xl">
+                <h2 class="text-3xl font-bold mb-10 text-center text-gray-800 dark:text-white">Contact Me</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+                    <!-- Left Column: Mail Form -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-6 text-gray-700 dark:text-gray-200">메시지 보내기</h3>
+
+                        <?php if ($formSubmitted && $mailSent): ?>
+                        <div class="mb-4 p-4 bg-green-100 dark:bg-green-700 border border-green-400 dark:border-green-600 text-green-700 dark:text-green-100 rounded-md">
+                            메시지가 성공적으로 전송되었습니다!
+                        </div>
+                        <?php elseif ($formSubmitted && $mailError): ?>
+                        <div class="mb-4 p-4 bg-red-100 dark:bg-red-700 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-100 rounded-md">
+                            메시지 전송에 실패했습니다. 모든 필드를 올바르게 입력했는지 확인해주세요.
+                        </div>
+                        <?php endif; ?>
+
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>#contact" method="POST">
+                            <div class="mb-4">
+                                <label for="form_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">이름</label>
+                                <input type="text" name="name" id="form_name" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="홍길동" value="<?php echo isset($form_name) && $mailError ? htmlspecialchars($form_name) : ''; ?>">
+                            </div>
+                            <div class="mb-4">
+                                <label for="form_email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">이메일</label>
+                                <input type="email" name="email" id="form_email" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="your@email.com" value="<?php echo isset($form_email) && $mailError ? htmlspecialchars($form_email) : ''; ?>">
+                            </div>
+                            <div class="mb-6">
+                                <label for="form_message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">메시지</label>
+                                <textarea name="message" id="form_message" rows="5" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="메시지를 입력해주세요..."><?php echo isset($form_message) && $mailError ? htmlspecialchars($form_message) : ''; ?></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600">
+                                    <i class="fas fa-paper-plane mr-2"></i> 전송하기
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Right Column: Map and Contact Info -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-6 text-gray-700 dark:text-gray-200">오시는 길 (미왕빌딩)</h3>
+                        <div class="mb-6">
+                            <!-- Google 지도 퍼가기 (사용자 제공 코드로 수정) -->
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.5248928911114!2d127.02677717717215!3d37.495536572057105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca15a761629d7%3A0xb1a5b1108d745e85!2z66-47JmVKOyjvCk!5e0!3m2!1sko!2skr!4v1746621690208!5m2!1sko!2skr"
+                                width="100%"
+                                height="256"
+                                style="border:0; border-radius: 0.375rem;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                        <div class="text-gray-700 dark:text-gray-300 space-y-3">
+                            <p><i class="fas fa-map-marker-alt mr-2 w-5 text-center text-blue-500"></i> <span class="font-semibold">미왕빌딩</span><br> <span class="ml-7">서울특별시 강남구 강남대로 378</span></p>
+                            <p><i class="fas fa-phone-alt mr-2 w-5 text-center text-blue-500"></i> 전화: 02-XXX-XXXX (가상 번호)</p>
+                            <p><i class="fas fa-envelope mr-2 w-5 text-center text-blue-500"></i> 이메일: contact@example.com (가상 이메일)</p>
+                            <p><i class="fas fa-subway mr-2 w-5 text-center text-blue-500"></i> 지하철: 강남역 (2호선, 신분당선) 1번 출구</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Footer -->
         <footer class="text-center text-gray-500 dark:text-gray-400 py-12 mt-8">
-            <p>&copy; <?php echo date("Y"); ?> <?php echo htmlspecialchars($name); ?>. All rights reserved.</p>
+            <p>&copy; <?php echo date("Y"); ?> <?php echo htmlspecialchars($pageOwnerName); ?>. All rights reserved.</p>
         </footer>
     </div>
 
