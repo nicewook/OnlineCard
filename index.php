@@ -6,14 +6,14 @@ $description = "찰리 파커는 재즈 역사상 가장 영향력 있는 음악
 $profileImageUrl = "profile.jpg"; // 프로필 이미지 경로
 
 $socialLinks = [
-    ["name" => "Kakao", "url" => "#", "icon" => "fas fa-comment"], // Font Awesome 아이콘 클래스로 변경
+    ["name" => "Kakao", "url" => "#", "icon" => "fas fa-comment"],
     ["name" => "LinkedIn", "url" => "#", "icon" => "fab fa-linkedin-in"],
     ["name" => "Facebook", "url" => "#", "icon" => "fab fa-facebook-f"],
     ["name" => "Instagram", "url" => "#", "icon" => "fab fa-instagram"],
-    ["name" => "X", "url" => "#", "icon" => "fab fa-x-twitter"], // 최신 X 로고로 변경
+    ["name" => "X", "url" => "#", "icon" => "fab fa-x-twitter"], 
 ];
 
-// 찰리 파커의 대표곡 유튜브 동영상으로 변경
+// 찰리 파커의 대표곡 유튜브 동영상
 $videos = [
     [
         "title" => "Charlie Parker - Now's The Time",
@@ -27,14 +27,71 @@ $videos = [
     ],
     [
         "title" => "Charlie Parker - Ornithology",
-        "embed_id" => "Z2tvlp7RnlM",
+        "embed_id" => "Z2tvlp7RnlM", 
         "description" => "파커의 대표작 'Ornithology'. 그의 별명인 'Bird'에서 영감을 받은 곡으로 비밥 재즈의 정수를 보여줍니다."
     ]
 ];
 
+// Books 데이터 - Picsum 이미지 사용
 $books = [
-    // 책 정보 추가 (예시)
-    // ["cover" => "book1_cover.jpg", "title" => "나의 첫 프롬프트 엔지니어링 책", "url" => "#"]
+    ["cover_image" => "https://picsum.photos/seed/book1/200/300", "title" => "The Bebop Bible: Scales & Licks"],
+    ["cover_image" => "https://picsum.photos/seed/book2/200/300", "title" => "Bird's Cookbook: Secret Recipes for Hot Licks"],
+    ["cover_image" => "https://picsum.photos/seed/book3/200/300", "title" => "Ornithology: A Study of Flight & Fancy"],
+    ["cover_image" => "https://picsum.photos/seed/book4/200/300", "title" => "Now's The Time: A Memoir of Midnight Jams"],
+    ["cover_image" => "https://picsum.photos/seed/book5/200/300", "title" => "Chasin' The Bird: A Life in Alto Sax"],
+    ["cover_image" => "https://picsum.photos/seed/book6/200/300", "title" => "The Dial & Savoy Sessions: Uncovered", "status" => "품절임박"],
+];
+
+// Careers 데이터 - 찰리 파커 테마
+$careers = [
+    [
+        "period" => "1945 - 1955 (The Golden Age)",
+        "title" => "Chief Architect of Bebop",
+        "company_display" => "<i class='fas fa-music mr-2 text-blue-500'></i>The School of Swing & Improvisation",
+    ],
+    [
+        "period" => "Late 1940s (Birdland Era)",
+        "title" => "Headliner & Resident Virtuoso",
+        "company_display" => "<i class='fas fa-crow mr-2 text-purple-500'></i>Birdland Jazz Club (New York)",
+    ],
+    [
+        "period" => "Early 1940s (The Minton's Spark)",
+        "title" => "Jam Session Revolutionary",
+        "company_display" => "<i class='fas fa-bolt mr-2 text-yellow-500'></i>Minton's Playhouse (Harlem)",
+    ],
+    [
+        "period" => "Throughout his career",
+        "title" => "Master of the Alto Saxophone",
+        "company_display" => "<i class='fas fa-drum-steelpan mr-2 text-red-500'></i>Worldwide Stages & Smoky Backrooms",
+    ]
+];
+
+// Education 데이터 - 찰리 파커 테마
+$education = [
+    [
+        "category" => "Honorary Doctorate",
+        "degree" => "Doctor of Musical Arts (Honoris Causa)",
+        "institution" => "University of Bebop (Posthumous)",
+        "logo_icon" => "fas fa-graduation-cap text-green-500"
+    ],
+    [
+        "category" => "Street Smarts & Night Clubs",
+        "degree" => "Advanced Studies in Harmony & Rhythm",
+        "institution" => "The Kansas City Scene & 52nd Street, NYC",
+        "logo_icon" => "fas fa-street-view text-green-500"
+    ],
+    [
+        "category" => "Self-Taught Genius",
+        "degree" => "PhD in 'Playing What They Ain't'",
+        "institution" => "The Woodshed University (Self-Directed)",
+        "logo_icon" => "fas fa-book-reader text-green-500"
+    ],
+    [
+        "category" => "Early Influences",
+        "degree" => "Apprenticeship under Buster Smith & Lester Young",
+        "institution" => "The Ether School of Jazz Legends",
+        "logo_icon" => "fas fa-microphone-alt text-green-500"
+    ]
 ];
 
 ?>
@@ -145,28 +202,94 @@ $books = [
         </section>
 
         <!-- Books Section -->
-        <?php if (!empty($books)): ?>
-        <section class="mt-12">
-            <h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-white">Books</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <section id="books" class="mt-16">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Books</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
                 <?php foreach ($books as $book): ?>
-                <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-                     <a href="<?php echo htmlspecialchars($book['url']); ?>" target="_blank">
-                        <img src="<?php echo htmlspecialchars($book['cover']); ?>" alt="<?php echo htmlspecialchars($book['title']); ?>" class="w-full h-64 object-cover">
-                        <div class="p-4">
-                            <h3 class="font-semibold text-md mb-1 truncate text-gray-800 dark:text-white"><?php echo htmlspecialchars($book['title']); ?></h3>
+                <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+                    <div class="relative w-full aspect-[2/3] flex-shrink-0">
+                        <img src="<?php echo htmlspecialchars($book['cover_image']); ?>" alt="<?php echo htmlspecialchars($book['title']); ?>" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+                            <h4 class="text-white text-xs sm:text-sm font-semibold text-center truncate" title="<?php echo htmlspecialchars($book['title']); ?>">
+                                <?php echo htmlspecialchars($book['title']); ?>
+                            </h4>
                         </div>
-                    </a>
+                    </div>
+                    <div class="p-3 text-center mt-auto">
+                        <?php if (isset($book['status']) && $book['status'] == '품절임박'): ?>
+                            <span class="text-sm font-semibold text-red-500 dark:text-red-400"><?php echo htmlspecialchars($book['status']); ?></span>
+                        <?php else: ?>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">&nbsp;</span>
+                        <?php endif; ?>
+                    </div>
                 </div>
                 <?php endforeach; ?>
             </div>
         </section>
-        <?php else: ?>
-        <section class="mt-12">
-            <h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-white">Books</h2>
-            <p class="text-gray-500 dark:text-gray-400">아직 출간된 책 정보가 없습니다.</p>
-        </section>
-        <?php endif; ?>
+
+        <!-- Careers & Education Section Wrapper -->
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+            <!-- Careers Section -->
+            <section id="career">
+                <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Careers</h2>
+                <div class="space-y-8">
+                    <?php foreach ($careers as $index => $career): ?>
+                    <div class="relative pl-8">
+                        <?php if ($index > 0): ?>
+                            <div class="absolute left-3.5 top-4 bottom-0 w-px bg-gray-300 dark:bg-gray-600"></div>
+                        <?php endif; ?>
+                        <div class="absolute left-0 top-2.5">
+                            <span class="block w-3 h-3 bg-blue-500 dark:bg-blue-400 rounded-full"></span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="inline-block px-3 py-1 text-xs font-semibold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900 rounded-full">
+                                <?php echo htmlspecialchars($career['period']); ?>
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-1"><?php echo htmlspecialchars($career['title']); ?></h3>
+                        <div class="text-gray-700 dark:text-gray-300">
+                            <?php if (isset($career['logo_icon'])): ?>
+                                <span class="mt-1"><i class="<?php echo htmlspecialchars($career['logo_icon']); ?> mr-2"></i><?php echo htmlspecialchars($career['company'] ?? ''); ?></span>
+                            <?php elseif (isset($career['logo'])): ?>
+                                <img src="<?php echo htmlspecialchars($career['logo']); ?>" alt="<?php echo htmlspecialchars($career['company'] ?? ''); ?>" class="h-6 mt-1 inline-block">
+                            <?php elseif (isset($career['company_display'])): ?>
+                                <div class="mt-1"><?php echo $career['company_display']; ?></div>
+                            <?php elseif (isset($career['company'])): ?>
+                                <p class="mt-1"><?php echo htmlspecialchars($career['company']); ?></p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </section>
+
+            <!-- Education Section -->
+            <section id="education">
+                <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Education</h2>
+                <div class="space-y-8">
+                    <?php foreach ($education as $index => $edu): ?>
+                    <div class="relative pl-8">
+                        <?php if ($index > 0): ?>
+                            <div class="absolute left-3.5 top-4 bottom-0 w-px bg-gray-300 dark:bg-gray-600"></div>
+                        <?php endif; ?>
+                        <div class="absolute left-0 top-2.5">
+                            <span class="block w-3 h-3 bg-green-500 dark:bg-green-400 rounded-full"></span>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-1"><?php echo htmlspecialchars($edu['category']); ?></p>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-1"><?php echo htmlspecialchars($edu['degree']); ?></h3>
+                        <div class="flex items-center text-gray-700 dark:text-gray-300">
+                            <?php if (isset($edu['logo_icon'])): ?>
+                                <i class="<?php echo htmlspecialchars($edu['logo_icon']); ?> mr-2 text-lg"></i>
+                            <?php elseif (isset($edu['logo'])): ?>
+                                <img src="<?php echo htmlspecialchars($edu['logo']); ?>" alt="<?php echo htmlspecialchars($edu['institution']); ?>" class="h-5 mr-2">
+                            <?php endif; ?>
+                            <span><?php echo htmlspecialchars($edu['institution']); ?></span>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </section>
+        </div>
 
         <!-- Footer -->
         <footer class="text-center text-gray-500 dark:text-gray-400 py-12 mt-8">
